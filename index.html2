@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>フィードバック掲示板</title>
+  <script src="https://cdn.jsdelivr.net/npm/tabletop@1.5.1/tabletop.min.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #eef6fb;
+      padding: 20px;
+      color: #333;
+    }
+    h1 {
+      color: #1e90ff;
+      text-align: center;
+    }
+    .form-link {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .form-link a {
+      background: #1e90ff;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+    .thread {
+      background: #ffffff;
+      border-left: 6px solid #1e90ff;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .reply {
+      background: #e6f0ff;
+      margin-top: 10px;
+      padding: 10px;
+      border-left: 4px solid #4682b4;
+      border-radius: 3px;
+    }
+    .meta {
+      font-size: 0.9em;
+      color: #666;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>フィードバック掲示板</h1>
+
+<div class="form-link">
+  <!-- https://forms.gle/2muFmpvMZUd3WEBL6 -->
+  <a href="https://docs.google.com/forms/d/https://forms.gle/ixmAxsJ8wwWLfYCX9/viewform" target="_blank">投稿フォームはこちら</a>
+</div>
+
+<div id="content">読み込み中...</div>
+
+<script>
+  const publicSpreadsheetKey = 'https://docs.google.com/spreadsheets/d/1Zd7KFr8BIEgFxE1tFtlTsJEBj5JW5e00LiAl6nwq5FU/edit?usp=sharing';
+
+  function showInfo(data) {
+    const container = document.getElementById('content');
+    container.innerHTML = '';
+    data.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'thread';
+      div.innerHTML = `
+        <div class="meta">${item['投稿者名']}（${item['投稿日']}）</div>
+        <p>${item['発言・要望内容']}</p>
+        ${item['返信内容（任意）'] ? <div class="reply"><strong>運営の返信：</strong><br>${item['返信内容（任意）']}</div> : ''}
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    Tabletop.init({
+      key: publicSpreadsheetKey,
+      callback: showInfo,
+      simpleSheet: true
+    });
+  });
+</script>
+
+</body>
+</html>

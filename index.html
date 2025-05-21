@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>フィードバック掲示板</title>
+  <script src="https://cdn.jsdelivr.net/npm/tabletop@1.5.1/tabletop.min.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #eef6fb;
+      padding: 20px;
+      color: #333;
+    }
+    h1 {
+      color: #1e90ff;
+      text-align: center;
+    }
+    .thread {
+      background: #ffffff;
+      border-left: 6px solid #1e90ff;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .reply {
+      background: #e6f0ff;
+      margin-top: 10px;
+      padding: 10px;
+      border-left: 4px solid #4682b4;
+      border-radius: 3px;
+    }
+    .meta {
+      font-size: 0.9em;
+      color: #666;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>フィードバック掲示板</h1>
+<div id="content">読み込み中...</div>
+
+<script>
+  // 公開スプレッドシートのキー（あなたのシートに合わせて変更OK）
+  const publicSpreadsheetKey = '1U2FqCoOSKhOaC-3aHVz3TF7mdg0_2xTziUPL1DGHmvU';
+
+  function showInfo(data) {
+    const container = document.getElementById('content');
+    container.innerHTML = '';
+    data.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'thread';
+      div.innerHTML = `
+        <div class="meta">${item['投稿者名']}（${item['投稿日']}）</div>
+        <p>${item['発言・要望内容']}</p>
+        ${item['返信内容（任意）'] ? <div class="reply"><strong>受注側の返信：</strong><br>${item['返信内容（任意）']}</div> : ''}
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    Tabletop.init({
+      key: publicSpreadsheetKey,
+      callback: showInfo,
+      simpleSheet: true,
+      error: function(err) {
+        document.getElementById('content').innerText = 'データの読み込みに失敗しました。';
+        console.error('読み込みエラー:', err);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

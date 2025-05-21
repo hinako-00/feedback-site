@@ -2,20 +2,117 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>フィードバック掲示板</title>
+  <title>サンプル試作</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.jsdelivr.net/npm/tabletop@1.5.1/tabletop.min.js"></script>
   <style>
     body {
-      font-family: sans-serif;
-      background: #eef6fb;
-      padding: 20px;
+      margin: 0;
+      font-family: 'Helvetica Neue', sans-serif;
+      background-color: #f8f8f8;
       color: #333;
     }
-    h1 {
+    header {
+      background-color: #e60033;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background-color: #fff;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    nav a {
+      color: #e60033;
+      text-decoration: none;
+      padding: 10px 15px;
+      font-weight: bold;
+    }
+    nav a:hover {
+      background-color: #f2f2f2;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+    .thread {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      margin-bottom: 15px;
+      padding: 15px;
+      border-radius: 5px;
+    }
+    .thread h2 {
+      margin-top: 0;
+      color: #e60033;
+    }
+    .thread p {
+      margin: 10px 0;
+    }
+
+    .form-box {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin-bottom: 30px;
+      border-radius: 5px;
+    }
+    .form-box h2 {
+      color: #e60033;
+    }
+    .form-box input,
+    .form-box textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1em;
+    }
+    .form-box button {
+      background-color: #e60033;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .response-box {
+      background-color: #f0f8ff;
+      border-left: 5px solid #1e90ff;
+      padding: 15px;
+      margin-top: 10px;
+      border-radius: 4px;
+    }
+
+    /* フィードバック掲示板の追加デザイン */
+    .feedback-section {
+      background-color: #eef6fb;
+      padding: 20px;
+      margin-top: 40px;
+      border-radius: 8px;
+    }
+    .feedback-section h2 {
       color: #1e90ff;
       text-align: center;
     }
-    .thread {
+    .form-link {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .form-link a {
+      background: #1e90ff;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+    .feedback-entry {
       background: #ffffff;
       border-left: 6px solid #1e90ff;
       padding: 15px;
@@ -23,7 +120,7 @@
       border-radius: 4px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     }
-    .reply {
+    .feedback-reply {
       background: #e6f0ff;
       margin-top: 10px;
       padding: 10px;
@@ -35,27 +132,103 @@
       color: #666;
       margin-bottom: 5px;
     }
+
+    footer {
+      background-color: #e60033;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+      }
+      nav a {
+        padding: 10px;
+      }
+    }
   </style>
 </head>
 <body>
 
-<h1>フィードバック掲示板</h1>
-<div id="content">読み込み中...</div>
+<header>
+  <h1>サンプル（試作）</h1>
+  <p>クライアントとのやり取り掲示板</p>
+</header>
+
+<nav>
+  <a href="#home">ホーム</a>
+  <a href="#topics">投稿一覧</a>
+  <a href="#form">新規発言</a>
+</nav>
+
+<div class="container">
+
+  <section class="form-box" id="form">
+    <h2>発言フォーム</h2>
+    <form>
+      <label for="name">お名前（任意）</label>
+      <input type="text" id="name" placeholder="例：クライアントA">
+
+      <label for="message">ご要望・発言内容</label>
+      <textarea id="message" rows="5" placeholder="ご意見・ご希望をご記入ください"></textarea>
+
+      <button type="submit">投稿する</button>
+    </form>
+  </section>
+
+  <div class="thread">
+    <h2>ロゴ制作について</h2>
+    <p>投稿者：クライアントA</p>
+    <p>会社ロゴを新しく作りたいのですが、やわらかい印象でお願いしたいです。</p>
+
+    <div class="response-box">
+      <strong>〇〇からの返信：</strong>
+      <p>ご依頼ありがとうございます！まずはラフ案を3つご提案させていただきます。数日中にお送りします。</p>
+    </div>
+  </div>
+
+  <div class="thread">
+    <h2>ホームページ修正依頼</h2>
+    <p>投稿者：クライアントB</p>
+    <p>先日作成いただいたページのトップ画像を差し替えたいです。</p>
+
+    <div class="response-box">
+      <strong>〇〇からの返信：</strong>
+      <p>画像の差し替え承知しました。新しい画像をお送りいただければ、当日中に対応いたします。</p>
+    </div>
+  </div>
+
+  <!-- フィードバック掲示板 -->
+  <section class="feedback-section">
+    <h2>フィードバック掲示板</h2>
+    <div class="form-link">
+      <a href="https://forms.gle/ixmAxsJ8wwWLfYCX9" target="_blank">投稿フォームはこちら</a>
+    </div>
+    <div id="content"></div>
+  </section>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 〇〇 All Rights Reserved.</p>
+</footer>
 
 <script>
-  // 公開スプレッドシートのキー（あなたのシートに合わせて変更OK）
-  const publicSpreadsheetKey = '1U2FqCoOSKhOaC-3aHVz3TF7mdg0_2xTziUPL1DGHmvU';
+  const publicSpreadsheetKey = '1Zd7KFr8BIEgFxE1tFtlTsJEBj5JW5e00LiAl6nwq5FU';
 
   function showInfo(data) {
     const container = document.getElementById('content');
     container.innerHTML = '';
     data.forEach(item => {
       const div = document.createElement('div');
-      div.className = 'thread';
+      div.className = 'feedback-entry';
       div.innerHTML = `
         <div class="meta">${item['投稿者名']}（${item['投稿日']}）</div>
         <p>${item['発言・要望内容']}</p>
-        ${item['返信内容（任意）'] ? <div class="reply"><strong>受注側の返信：</strong><br>${item['返信内容（任意）']}</div> : ''}
+        ${item['返信内容（任意）'] ? <div class="feedback-reply"><strong>運営の返信：</strong><br>${item['返信内容（任意）']}</div> : ''}
       `;
       container.appendChild(div);
     });
@@ -65,11 +238,7 @@
     Tabletop.init({
       key: publicSpreadsheetKey,
       callback: showInfo,
-      simpleSheet: true,
-      error: function(err) {
-        document.getElementById('content').innerText = 'データの読み込みに失敗しました。';
-        console.error('読み込みエラー:', err);
-      }
+      simpleSheet: true
     });
   });
 </script>

@@ -2,79 +2,58 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>サンプル試作</title>
+  <title>〇〇掲示板ポータル</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.jsdelivr.net/npm/tabletop@1.5.1/tabletop.min.js"></script>
   <style>
     body {
+      font-family: sans-serif;
+      background: #f8f8f8;
       margin: 0;
-      font-family: 'Helvetica Neue', sans-serif;
-      background-color: #f8f8f8;
+      padding: 0;
       color: #333;
     }
+
     header {
-      background-color: #e60033;
+      background: #e60033;
       color: white;
-      padding: 20px;
       text-align: center;
-    }
-    nav {
-      background-color: #fff;
-      border-bottom: 1px solid #ccc;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    nav a {
-      color: #e60033;
-      text-decoration: none;
-      padding: 10px 15px;
-      font-weight: bold;
-    }
-    nav a:hover {
-      background-color: #f2f2f2;
-    }
-    .container {
-      max-width: 1000px;
-      margin: 20px auto;
-      padding: 0 20px;
-    }
-    .thread {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      margin-bottom: 15px;
-      padding: 15px;
-      border-radius: 5px;
-    }
-    .thread h2 {
-      margin-top: 0;
-      color: #e60033;
-    }
-    .thread p {
-      margin: 10px 0;
+      padding: 20px;
     }
 
-    .form-box {
-      background-color: #fff;
-      border: 1px solid #ccc;
+    section {
       padding: 20px;
-      margin-bottom: 30px;
-      border-radius: 5px;
+      max-width: 1000px;
+      margin: 0 auto;
     }
-    .form-box h2 {
+
+    h2 {
+      border-left: 6px solid #e60033;
+      padding-left: 10px;
       color: #e60033;
     }
+
+    .form-box,
+    .thread {
+      background: #fff;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      border-left: 4px solid #e60033;
+    }
+
     .form-box input,
     .form-box textarea {
       width: 100%;
       padding: 10px;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       border: 1px solid #ccc;
       border-radius: 4px;
-      font-size: 1em;
     }
+
     .form-box button {
-      background-color: #e60033;
+      background: #e60033;
       color: white;
       padding: 10px 20px;
       border: none;
@@ -82,166 +61,113 @@
       cursor: pointer;
     }
 
-    .response-box {
-      background-color: #f0f8ff;
-      border-left: 5px solid #1e90ff;
-      padding: 15px;
-      margin-top: 10px;
-      border-radius: 4px;
-    }
-
-    /* フィードバック掲示板の追加デザイン */
-    .feedback-section {
-      background-color: #eef6fb;
-      padding: 20px;
-      margin-top: 40px;
-      border-radius: 8px;
-    }
-    .feedback-section h2 {
-      color: #1e90ff;
-      text-align: center;
-    }
-    .form-link {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    .form-link a {
-      background: #1e90ff;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 6px;
-      text-decoration: none;
-    }
-    .feedback-entry {
-      background: #ffffff;
-      border-left: 6px solid #1e90ff;
-      padding: 15px;
-      margin-bottom: 20px;
-      border-radius: 4px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-    .feedback-reply {
+    .reply {
       background: #e6f0ff;
       margin-top: 10px;
       padding: 10px;
       border-left: 4px solid #4682b4;
       border-radius: 3px;
     }
+
     .meta {
       font-size: 0.9em;
       color: #666;
-      margin-bottom: 5px;
     }
 
     footer {
-      background-color: #e60033;
+      background: #e60033;
       color: white;
       text-align: center;
       padding: 20px;
       margin-top: 40px;
     }
-
-    @media (max-width: 600px) {
-      nav {
-        flex-direction: column;
-      }
-      nav a {
-        padding: 10px;
-      }
-    }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>サンプル（試作）</h1>
-  <p>クライアントとのやり取り掲示板</p>
-</header>
-
-<nav>
-  <a href="#home">ホーム</a>
-  <a href="#topics">投稿一覧</a>
-  <a href="#form">新規発言</a>
-</nav>
-
-<div class="container">
-
-  <section class="form-box" id="form">
-    <h2>発言フォーム</h2>
-    <form>
-      <label for="name">お名前（任意）</label>
-      <input type="text" id="name" placeholder="例：クライアントA">
-
-      <label for="message">ご要望・発言内容</label>
-      <textarea id="message" rows="5" placeholder="ご意見・ご希望をご記入ください"></textarea>
-
-      <button type="submit">投稿する</button>
-    </form>
-  </section>
-
-  <div class="thread">
-    <h2>ロゴ制作について</h2>
-    <p>投稿者：クライアントA</p>
-    <p>会社ロゴを新しく作りたいのですが、やわらかい印象でお願いしたいです。</p>
-
-    <div class="response-box">
-      <strong>〇〇からの返信：</strong>
-      <p>ご依頼ありがとうございます！まずはラフ案を3つご提案させていただきます。数日中にお送りします。</p>
-    </div>
-  </div>
-
-  <div class="thread">
-    <h2>ホームページ修正依頼</h2>
-    <p>投稿者：クライアントB</p>
-    <p>先日作成いただいたページのトップ画像を差し替えたいです。</p>
-
-    <div class="response-box">
-      <strong>〇〇からの返信：</strong>
-      <p>画像の差し替え承知しました。新しい画像をお送りいただければ、当日中に対応いたします。</p>
-    </div>
-  </div>
+  <header>
+    <h1>〇〇掲示板ポータル</h1>
+    <p>フィードバックとウンチクを共有しよう！</p>
+  </header>
 
   <!-- フィードバック掲示板 -->
-  <section class="feedback-section">
+  <section id="feedback-section">
     <h2>フィードバック掲示板</h2>
-    <div class="form-link">
-      <a href="https://forms.gle/ixmAxsJ8wwWLfYCX9" target="_blank">投稿フォームはこちら</a>
+    <div class="form-box">
+      <p>投稿は以下のGoogleフォームからお願いします：</p>
+      <a href="https://forms.gle/ixmAxsJ8wwWLfYCX9" target="_blank">📨 フィードバック投稿フォーム</a>
     </div>
-    <div id="content"></div>
+    <div id="feedback-content">読み込み中...</div>
   </section>
 
-</div>
+  <!-- ウンチク掲示板 -->
+  <section id="unchiku-section">
+    <h2>ウンチク掲示板</h2>
+    <div class="form-box">
+      <form id="unchiku-form">
+        <input type="text" name="name" placeholder="名前（任意）" />
+        <textarea name="message" rows="4" placeholder="面白いウンチクや小ネタを書いてください"></textarea>
+        <button type="submit">投稿する</button>
+      </form>
+    </div>
+    <div id="unchiku-content">
+      <div class="thread">
+        <p class="meta">サンプル（名無しさん）</p>
+        <p>「エレベーターの「閉じる」ボタンは実はダミーだった」という話は都市伝説らしい。</p>
+      </div>
+    </div>
+  </section>
 
-<footer>
-  <p>&copy; 2025 〇〇 All Rights Reserved.</p>
-</footer>
+  <footer>
+    <p>&copy; 2025 〇〇 All Rights Reserved.</p>
+  </footer>
 
-<script>
-  const publicSpreadsheetKey = '1Zd7KFr8BIEgFxE1tFtlTsJEBj5JW5e00LiAl6nwq5FU';
+  <script>
+    // フィードバック掲示板の読み込み
+    const publicSpreadsheetKey = '1Zd7KFr8BIEgFxE1tFtlTsJEBj5JW5e00LiAl6nwq5FU';
+    function showInfo(data) {
+      const container = document.getElementById('feedback-content');
+      container.innerHTML = '';
+      data.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'thread';
+        div.innerHTML = `
+          <div class="meta">${item['投稿者名']}（${item['投稿日']}）</div>
+          <p>${item['発言・要望内容']}</p>
+          ${item['返信内容（任意）'] ? <div class="reply"><strong>返信：</strong><br>${item['返信内容（任意）']}</div> : ''}
+        `;
+        container.appendChild(div);
+      });
+    }
 
-  function showInfo(data) {
-    const container = document.getElementById('content');
-    container.innerHTML = '';
-    data.forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'feedback-entry';
-      div.innerHTML = `
-        <div class="meta">${item['投稿者名']}（${item['投稿日']}）</div>
-        <p>${item['発言・要望内容']}</p>
-        ${item['返信内容（任意）'] ? <div class="feedback-reply"><strong>運営の返信：</strong><br>${item['返信内容（任意）']}</div> : ''}
-      `;
-      container.appendChild(div);
+    window.addEventListener('DOMContentLoaded', () => {
+      Tabletop.init({
+        key: publicSpreadsheetKey,
+        callback: showInfo,
+        simpleSheet: true
+      });
     });
-  }
 
-  window.addEventListener('DOMContentLoaded', () => {
-    Tabletop.init({
-      key: publicSpreadsheetKey,
-      callback: showInfo,
-      simpleSheet: true
+    // ウンチク掲示板投稿処理
+    document.getElementById('unchiku-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = new FormData(form);
+      const params = new URLSearchParams(data);
+
+      fetch("https://script.google.com/macros/s/AKfycbyDRyDbgrIDirGRBq1yDMBt9ugHOWQy7w_KFtQ0cK4-c6eRbJr-XqWXNc3nbKqNvtxDsg/exec", {
+        method: "POST",
+        body: params
+      })
+      .then(res => res.ok ? alert("投稿が送信されました！") : alert("送信に失敗しました。"))
+      .catch(err => {
+        console.error("エラー:", err);
+        alert("エラーが発生しました。");
+      });
+
+      form.reset();
     });
-  });
-</script>
+  </script>
 
 </body>
 </html>

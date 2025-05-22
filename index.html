@@ -87,8 +87,29 @@
 
   <header>
     <h1>〇〇掲示板ポータル</h1>
-    <p>フィードバックとウンチクを共有しよう！</p>
+    <p>フィードバックと豆知識を共有しよう！</p>
   </header>
+
+  <!-- 発言フォーム -->
+  <section id="post-form-section">
+    <h2>発言フォーム</h2>
+    <div class="form-box">
+      <form id="post-form">
+        <input type="text" name="name" placeholder="名前（任意）" />
+        <textarea name="message" rows="4" placeholder="コメントを入力してください"></textarea>
+        <button type="submit">投稿する</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- スレッド例 -->
+  <section id="thread-example-section">
+    <h2>スレッド例</h2>
+    <div class="thread">
+      <p class="meta">サンプル（名無しさん）</p>
+      <p>これはスレッドのサンプルです。</p>
+    </div>
+  </section>
 
   <!-- フィードバック掲示板 -->
   <section id="feedback-section">
@@ -100,21 +121,18 @@
     <div id="feedback-content">読み込み中...</div>
   </section>
 
-  <!-- ウンチク掲示板 -->
-  <section id="unchiku-section">
-    <h2>ウンチク掲示板</h2>
+  <!-- 豆知識掲示板 -->
+  <section id="trivia-section">
+    <h2>豆知識掲示板</h2>
     <div class="form-box">
-      <form id="unchiku-form">
+      <form id="trivia-form">
         <input type="text" name="name" placeholder="名前（任意）" />
-        <textarea name="message" rows="4" placeholder="面白いウンチクや小ネタを書いてください"></textarea>
+        <textarea name="message" rows="4" placeholder="面白い豆知識や小ネタを書いてください"></textarea>
         <button type="submit">投稿する</button>
       </form>
     </div>
-    <div id="unchiku-content">
-      <div class="thread">
-        <p class="meta">サンプル（名無しさん）</p>
-        <p>「エレベーターの「閉じる」ボタンは実はダミーだった」という話は都市伝説らしい。</p>
-      </div>
+    <div id="trivia-content">
+      <p>読み込み中...</p>
     </div>
   </section>
 
@@ -148,8 +166,8 @@
       });
     });
 
-    // ウンチク掲示板投稿処理
-    document.getElementById('unchiku-form').addEventListener('submit', function(e) {
+    // 豆知識掲示板の投稿処理
+    document.getElementById('trivia-form').addEventListener('submit', function(e) {
       e.preventDefault();
       const form = e.target;
       const data = new FormData(form);
@@ -166,6 +184,34 @@
       });
 
       form.reset();
+    });
+
+    // 豆知識掲示板の表示処理
+    function loadTrivia() {
+      fetch("https://script.google.com/macros/s/AKfycbyDRyDbgrIDirGRBq1yDMBt9ugHOWQy7w_KFtQ0cK4-c6eRbJr-XqWXNc3nbKqNvtxDsg/exec")
+        .then(response => response.json())
+        .then(data => {
+          const container = document.getElementById('trivia-content');
+          container.innerHTML = '';
+          data.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'thread';
+            div.innerHTML = `
+              <div class="meta">${item.name || '名無しさん'}（${item.timestamp}）</div>
+              <p>${item.message}</p>
+            `;
+            container.appendChild(div);
+          });
+        })
+        .catch(error => {
+          console.error('データの取得に失敗しました:', error);
+          document.getElementById('trivia-content').innerHTML = '<p>データの取得に失敗しました。</p>';
+        });
+    }
+
+    // ページ読み込み時に豆知識を読み込む
+    window.addEventListener('DOMContentLoaded', () => {
+      loadTrivia();
     });
   </script>
 
